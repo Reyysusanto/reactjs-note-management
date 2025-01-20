@@ -40,45 +40,57 @@ function App() {
   };
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <p className="text-center text-gray-500 mt-10">Loading...</p>;
   }
 
   if (authedUser === null) {
     return (
-      <div className={`app-container ${theme}`}>
-        <header>
-          <h1>Reyy Library</h1>
+      <div className={`app-container ${theme} min-h-screen bg-gray-100 dark:bg-gray-900`}>
+        <header className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 shadow-md text-white text-center rounded-b-lg">
+          <h1 className="text-3xl font-extrabold">Reyy Library</h1>
         </header>
-        <main>
-          <Routes>
-            <Route path="/login" element={<LoginPage loginSuccess={onLoginSuccess} />} />
-            <Route path="/register" element={<SignUpPage />} />
-            <Route path="*" element={<LoginPage loginSuccess={onLoginSuccess} />} /> 
-            {/* Redirect semua rute ke halaman login jika belum otentikasi */}
-          </Routes>
+        <main className="p-6 flex justify-center items-center">
+          <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg space-y-6">
+            <Routes>
+              <Route path="/login" element={<LoginPage loginSuccess={onLoginSuccess} />} />
+              <Route path="/register" element={<SignUpPage />} />
+              <Route path="*" element={<LoginPage loginSuccess={onLoginSuccess} />} />
+            </Routes>
+          </div>
         </main>
       </div>
     );
   }
 
   return (
-    <div className={`app-container ${theme}`}>
-      <header>
-        <h1>Reyy Library</h1>
-        <nav>
-          <Link to="/">Home</Link>
-          <Link to="/new">Add Note</Link>
-          <button onClick={onLogout}>Logout</button>
-          <button onClick={toggleTheme}>Toggle Theme</button>
-        </nav>
+    <div className={`app-container ${theme} min-h-screen bg-gray-100 dark:bg-gray-900`}>
+      <header className="bg-gradient-to-r from-blue-600 to-indigo-700 p-6 shadow-md text-white">
+        <div className="flex justify-between items-center">
+          <h1 className="text-3xl font-extrabold">Reyy Library</h1>
+          <nav className="space-x-6 text-lg">
+            <Link to="/" className="text-white hover:text-gray-300 transition">Home</Link>
+            <Link to="/new" className="text-white hover:text-gray-300 transition">Add Note</Link>
+            <button
+              onClick={onLogout}
+              className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full transition duration-200 ease-in-out transform hover:scale-105"
+            >
+              Logout
+            </button>
+            <button
+              onClick={toggleTheme}
+              className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-full transition duration-200 ease-in-out transform hover:scale-105"
+            >
+              Toggle Theme
+            </button>
+          </nav>
+        </div>
       </header>
-      <main>
+      <main className="p-6">
         <Routes>
           <Route path="/" element={<NoteList />} />
           <Route path="/notes/:noteId" element={<NoteDetailPage />} />
           <Route path="/new" element={<NewNotePage />} />
-          <Route path="*" element={<NoteList />} /> 
-          {/* Redirect ke home jika halaman tidak ditemukan */}
+          <Route path="*" element={<NoteList />} />
         </Routes>
       </main>
     </div>

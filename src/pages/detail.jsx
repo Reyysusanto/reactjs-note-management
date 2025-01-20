@@ -29,13 +29,15 @@ const NoteDetailPage = () => {
   };
 
   if (!note) {
-    return <p>Catatan tidak ditemukan!</p>;
+    return <p className="text-center text-red-500 font-semibold">Catatan tidak ditemukan!</p>;
   }
 
   return (
-    <div>
+    <div className="container mx-auto p-6 bg-white rounded-lg shadow-lg">
       <NoteDetail note={note} onDelete={handleDelete} />
-      <Link to="/">Kembali</Link>
+      <div className="mt-4 text-center">
+        <Link to="/" className="text-blue-500 hover:underline">Kembali</Link>
+      </div>
     </div>
   );
 };
