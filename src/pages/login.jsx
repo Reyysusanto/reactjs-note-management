@@ -5,7 +5,7 @@ import PropTypes from "prop-types"
 
 const LoginPage = ({ loginSuccess }) => {
     const onLoginHandler = async ({ email, password }) => {
-        const { error, data } = await login(email, password)
+        const { error, data } = await login({email, password})
         if(!error) {
             loginSuccess(data)
         }

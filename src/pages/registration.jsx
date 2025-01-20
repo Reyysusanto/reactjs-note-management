@@ -6,9 +6,13 @@ const SignUpPage = () => {
     const navigate = useNavigate()
 
     const onRegisterHandler = async (user) => {
-        const { error } = await register(user)
-        if(!error) {
-            navigate('/')
+        try {
+            const { error } = await register(user);
+            if (!error) {
+                navigate('/');
+            }
+        } catch (error) {
+            console.log('Terjadi kesalahan, silakan coba lagi.');
         }
     } 
 

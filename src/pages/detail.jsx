@@ -1,14 +1,31 @@
-import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getNote, deleteNote } from '../utils/api';
 import NoteDetail from '../components/NoteDetail';
 
 const NoteDetailPage = () => {
   const { noteId } = useParams();
-  const note = getNote(noteId);
+  const [note, setNote] = useState(null);
+  const navigate = useNavigate();
 
-  const handleDelete = () => {
-    deleteNote(noteId);
+  useEffect(() => {
+    const fetchNote = async () => {
+      const { error, data } = await getNote(noteId);
+      if (!error) {
+        setNote(data);
+      } else {
+        setNote(null);
+      }
+    };
+
+    fetchNote();
+  }, [noteId]);
+
+  const handleDelete = async () => {
+    const { error } = await deleteNote(noteId);
+    if (!error) {
+      navigate('/');
+    }
   };
 
   if (!note) {
@@ -17,7 +34,7 @@ const NoteDetailPage = () => {
 
   return (
     <div>
-      <NoteDetail note={note} onDelete={handleDelete}/>
+      <NoteDetail note={note} onDelete={handleDelete} />
       <Link to="/">Kembali</Link>
     </div>
   );

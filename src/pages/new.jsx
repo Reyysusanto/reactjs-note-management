@@ -7,13 +7,17 @@ const NewNotePage = () => {
   const [body, setBody] = useState('');
   const navigate = useNavigate();
 
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
-    addNote({
-      title,
-      body,
-    });
-    navigate('/');
+
+    try {
+      const { error } = await addNote({ title, body });
+      if (!error) {
+        navigate('/');
+      }
+    } catch (error) {
+      console.log('Terjadi kesalahan, silakan coba lagi.');
+    }
   };
 
   return (
